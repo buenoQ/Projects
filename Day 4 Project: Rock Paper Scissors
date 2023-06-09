@@ -1,0 +1,71 @@
+import random
+rock = '''
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+#Write your code below this line 👇
+
+#Prints out what the player picked into a hand
+choice = input("Rock, Paper, or Scissors\n")
+
+if choice == "Rock":
+  print(rock)
+elif choice == "Paper":
+  print(paper)
+else:
+  print(scissors)
+
+print("Computer chose:")
+#Decides a random choice and then prints that choice out
+bot_Choices = ["Rock", "Paper", "Scissors"]
+bot_Choices_Length = len(bot_Choices)
+random_Choice_Number = random.randint(0, bot_Choices_Length - 1)
+random_Choice = bot_Choices[random_Choice_Number]
+
+if random_Choice == "Rock":
+  print(rock)
+elif random_Choice == "Paper":
+  print(paper)
+else:
+  print(scissors)
+
+#Determines who is the winner
+if choice == random_Choice:
+  print("It's a draw")
+elif choice == "Rock" and random_Choice == "Paper":
+  print("You lose")
+elif choice == "Paper" and random_Choice == "Scissors":
+  print("You lose")
+elif choice == "Scissors" and random_Choice == "Rock":
+  print("You lose")
+else:
+  print("You win")
+
+
+
+
+
+
