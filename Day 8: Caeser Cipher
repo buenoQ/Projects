@@ -1,0 +1,101 @@
+main.py
+
+import character
+
+#ecodes the message with a determined shifter
+def encode(message, shifter):
+    #Makes an empty message and will later add to it to make the encoded message
+    encoded_message = ""
+    #Uses two for loops the first one is used to go through every character of the message that you want to encode and then the second is used to find the matching character from the first loop in the character.alpahabet
+    for n in range(len(message)):
+        holder = 0
+        for i in range(len(character.alphabet)):
+            #It will then get the index of the matching character in character.alphabet
+            if message[n] == " ":
+                break
+            if message[n] == character.alphabet[i]:
+                holder = i
+                break
+        #Adds the shifter to the index and set it equal to the holder and if the holder is over the length of the character.alphabet then it will reset itself to the first index in the character.alphabet
+        holder += shifter      
+        if holder > 25:
+            holder -= 26
+        #Gets the shifted letter and adds it to the empty message
+        if message[n] == " ":
+            encoded_message += " "
+        else:
+            encoded_message += character.alphabet[holder]
+    print(f"Here's the encoded result: {encoded_message}!")
+
+#decodes the message with a determined shifter
+#all of the cooments are the same as above
+def decode(message, shifter):
+    encoded_message = ""
+    for n in range(len(message)):
+        holder = 0
+        for i in range(len(character.alphabet)):
+            if message[n] == " ":
+                break
+            if message[n] == character.alphabet[i]:
+                holder = i
+                break
+        #Subtracts the shifter to the index and set it equal to the holder and if the holder is less the length of the character.alphabet then it will reset itself to the last index in the character.alphabet      
+        holder -= shifter      
+        if holder < 0:
+            holder += 26
+        #Gets the shifted letter and adds it to the empty message  
+        if message[n] == " ":
+            encoded_message += " "
+        else:
+            encoded_message += character.alphabet[holder]
+    print(f"Here's the encoded result: {encoded_message}!")
+    
+  
+keep_going = True
+while keep_going == True:
+    #Asks whether the user wants to decode or encode, asks the message, and the shifter. After that it will then calculate the encoded or decoded message by using the functions above and once all of that is done, it will ask whether the user would like to go again or not
+    encode_or_decode_descision = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+    user_message = input("Type your message:\n").lower()
+    shift_number = int(input("Type the shift number:\n"))
+  
+    if encode_or_decode_descision == "encode":
+        encode(message = user_message, shifter = shift_number)
+    else:
+        decode(message = user_message, shifter = shift_number)
+
+    go_again = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n")
+    if go_again == "no":
+      keep_going = False
+  
+
+
+
+
+
+character.py
+alphabet = ["a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i",
+            "j",
+            "k",
+            "l",
+            "m",
+            "n",
+            "o",
+            "p",
+            "q",
+            "r",
+            "s",
+            "t",
+            "u",
+            "v",
+            "w",
+            "x",
+            "y",
+            "z"]
