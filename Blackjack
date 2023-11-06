@@ -1,0 +1,154 @@
+############### Blackjack Project #####################
+
+#Difficulty Normal 😎: Use all Hints below to complete the project.
+#Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
+#Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
+#Difficulty Expert 🤯: Only use Hint 1 to complete the project.
+#####################
+
+
+#Difficulty Normal 😎: Use all Hints below to complete the project.
+
+#Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
+
+#Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
+
+#Difficulty Expert 🤯: Only use Hint 1 to complete the project.
+
+
+############### Our Blackjack House Rules #####################
+
+
+## The deck is unlimited in size. 
+
+## There are no jokers. 
+
+## The Jack/Queen/King all count as 10.
+
+## The the Ace can count as 11 or 1.
+
+## Use the following list as the deck of cards:
+
+## cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+## The cards in the list have equal probability of being drawn.
+
+## Cards are not removed from the deck as they are drawn.
+
+## The computer is the dealer.
+
+
+##################### Hints #####################
+
+
+
+############### Our Blackjack House Rules #####################
+
+## The deck is unlimited in size. 
+## There are no jokers. 
+## The Jack/Queen/King all count as 10.
+## The the Ace can count as 11 or 1.
+## Use the following list as the deck of cards:
+## cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+## The cards in the list have equal probability of being drawn.
+## Cards are not removed from the deck as they are drawn.
+## The computer is the dealer.
+
+##################### Hints #####################
+from replit import clear
+import random
+import art
+
+#in the case that the total card value is over 21, this function will be used to check if there is a possible 11 within the card values and then if there is, the funcion sets it equal to 1
+#Used to save the players in case that the value of their cards goes over 21 and they have an 11 as a card
+def check_for_possible_one(value, cards):
+    if value > 21:
+            i = 0
+            while True:
+                if i == len(cards): 
+                    return cards
+                if cards[i] == 11:
+                    cards[i] = 1
+                    return cards
+                i += 1
+    else: 
+        return cards
+
+#runs the game of black jack and will utilize recursion to play the game again
+def blackjack():
+    #this is the players potenital cards to draw from and creaters the hands of the players
+    print(art.logo)
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    players_cards = {"yours": [],
+                     "dealer": [],
+    }
+
+    #will add two cards randomly to each players hands
+    for keys in players_cards:
+        for x in range(len(players_cards.keys())):
+            players_cards[keys].append(random.choice(cards))
+
+    #will add the total value of your cards and print out the players cards and dealers first card
+    players_value = sum(players_cards["yours"])
+    print(f"Your cards: {players_cards['yours']}, current score: {players_value}")
+    print("Computer's first card: " + f'{players_cards["dealer"][0]}')
+
+    #will add extra cards to the players hand and determine if player is still good to keep playing
+    while True:      
+        players_cards["yours"] = check_for_possible_one(players_value, players_cards["yours"])
+        if input("Type 'y' to get another card, type 'n' to pass: ") == "y":
+            players_cards['yours'].append(random.choice(cards))
+        else:
+            break
+        players_value = sum(players_cards["yours"])    
+        players_cards["yours"] = check_for_possible_one(players_value, players_cards["yours"])
+        players_value = sum(players_cards["yours"])     
+        print(f"Your cards: {players_cards['yours']}, current score: {players_value}")
+        print("Computer's first card: " + f'{players_cards["dealer"][0]}')
+        if players_value > 21:
+            players_cards["yours"] = check_for_possible_one(players_value, players_cards["yours"])
+            if players_value > 21:
+                break
+            
+    #will add extra cards to dealers hands until the value of his hand is 17 or higher
+    dealers_value = sum(players_cards["dealer"])
+    if dealers_value < 17:
+        while True:
+            players_cards["dealer"].append(random.choice(cards))
+            dealers_value = sum(players_cards["dealer"])
+            if dealers_value >= 17:
+                players_cards["dealer"] = check_for_possible_one(dealers_value, players_cards["dealer"])
+                if dealers_value >= 17:
+                    break
+    #prints out players cards and the total value of their cards
+    print(f"Your final hand: {players_cards['yours']}, final score: {players_value}")
+    print("Computer's final hand: " + f'{players_cards["dealer"]}, final score: {dealers_value}')
+
+    #determines the result of the game
+    if dealers_value == players_value:
+        print("Draw, no one wins")
+    elif dealers_value > 21 and players_value > 21:
+        print("Both players bust, no one wins")
+    elif dealers_value > 21:
+        print("Computer busted, you win")
+    elif players_value > 21:
+        print("You busted, computer wins")
+    elif dealers_value > players_value:
+        print("Computer Wins")
+    else:
+        print("You win")
+
+    #recursion bro
+    if input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == "y":
+       clear()
+       blackjack()
+    else:
+        clear()
+      
+#recursion bro       
+if input("Do you want to play a game of Blackjack? Type 'y' or 'n': ") == "y":
+       clear()
+       blackjack()
+else:
+    clear()
+    
